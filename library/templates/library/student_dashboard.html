@@ -1,49 +1,131 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Dashboard - Union Library</title>
-</head>
-<body>
+```html
+{% extends 'library/base.html' %}
 
-    <h1>UNION LIBRARY</h1>
+{% block title %}Student Dashboard - Smart Library{% endblock %}
 
-    <h2>Student Dashboard</h2>
+{% block content %}
 
-    <h3>Borrowed Books</h3>
+<div class="container">
 
-    <p>No borrowed books currently.</p>
+    <div class="card">
 
-    <h3>Reserved Books</h3>
+        <h1>🎓 Student Dashboard</h1>
 
-    {% if reservations %}
+        <p>
+            Welcome,
+            <strong>{{ user.first_name|default:user.username }}</strong>
+        </p>
 
-        {% for reservation in reservations %}
-
-            <p>
-                <strong>Book:</strong> {{ reservation.book.title }}
-            </p>
-
-            <p>
-                <strong>Author:</strong> {{ reservation.book.author }}
-            </p>
-
-            <p>
-                <strong>Status:</strong> {{ reservation.status }}
-            </p>
-
-            <hr>
-
-        {% endfor %}
-
-    {% else %}
-
-        <p>No reserved books currently.</p>
-
-    {% endif %}
+    </div>
 
     <br>
 
-    <a href="/books/">Browse Books</a>
+    <!-- Borrowed Books -->
 
-</body>
-</html>
+    <div class="card">
+
+        <h2>📚 Borrowed Books</h2>
+
+        {% if issues %}
+
+            {% for issue in issues %}
+
+                <div class="book-card">
+
+                    <h3>📖 {{ issue.book.title }}</h3>
+
+                    <p>
+                        <strong>Author:</strong>
+                        {{ issue.book.author }}
+                    </p>
+
+                    <p>
+                        <strong>Issue Date:</strong>
+                        {{ issue.issue_date }}
+                    </p>
+
+                    {% if issue.returned %}
+
+                        <p style="color: green; font-weight: bold;">
+                            ✓ Returned
+                        </p>
+
+                    {% else %}
+
+                        <p style="color: orange; font-weight: bold;">
+                            ● Currently Borrowed
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                No borrowed books currently.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <!-- Reserved Books -->
+
+    <div class="card">
+
+        <h2>🔖 Reserved Books</h2>
+
+        {% if reservations %}
+
+            {% for reservation in reservations %}
+
+                <div class="book-card">
+
+                    <h3>📖 {{ reservation.book.title }}</h3>
+
+                    <p>
+                        <strong>Author:</strong>
+                        {{ reservation.book.author }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ reservation.status }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                No reserved books currently.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <a
+            href="{% url 'book_catalog' %}"
+            class="btn btn-primary"
+        >
+            📚 Browse Books
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```

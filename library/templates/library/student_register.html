@@ -1,44 +1,92 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Registration - Union Library</title>
-</head>
-<body>
+{% extends 'library/base.html' %}
 
-    <h1>UNION LIBRARY</h1>
+{% block title %}Student Registration - Smart Library{% endblock %}
 
-    <h2>Student Registration</h2>
+{% block content %}
 
-    <form method="post">
-    {% csrf_token %}
+<div class="container">
 
-  
-        <label>Full Name:</label>
-        <input type="text" name="name">
-        <br><br>
+    <div class="form-card">
 
-        <label>Email:</label>
-        <input type="email" name="email">
-        <br><br>
+        <h2>🎓 Student Registration</h2>
 
-        <label>Username:</label>
-        <input type="text" name="username">
-        <br><br>
+        {% if message %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endif %}
 
-        <label>Password:</label>
-        <input type="password" name="password">
-        <br><br>
+        <form method="post">
 
-        <label>Confirm Password:</label>
-        <input type="password" name="confirm_password">
-        <br><br>
+            {% csrf_token %}
 
-        <button type="submit">Register</button>
-    </form>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required
+                >
+            </div>
 
-    <br>
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+            </div>
 
-    <a href="/student/login/">Already have an account? Student Login</a>
+            <div class="form-group">
+                <label>Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Choose a username"
+                    required
+                >
+            </div>
 
-</body>
-</html>
+            <div class="form-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input
+                    type="password"
+                    name="confirm_password"
+                    placeholder="Confirm your password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Create Account
+            </button>
+
+        </form>
+
+        <br>
+
+        <p>
+            Already have an account?
+            <a href="{% url 'student_login' %}">
+                Student Login
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,49 +1,94 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Book Catalog - Union Library</title>
-</head>
-<body>
+{% extends 'library/base.html' %}
 
-    <h1>UNION LIBRARY</h1>
+{% block title %}Book Catalog - Smart Library{% endblock %}
 
-    <h2>Book Catalog</h2>
+{% block content %}
 
-    <p>Browse available books</p>
-    <form method="get">
-    <input type="text" name="search" placeholder="Search by title or author">
-    <button type="submit">Search</button>
-</form>
+<div class="container">
 
-<br>
+    <h1>📚 Book Catalog</h1>
 
-    <table border="1">
-        <tr>
-            <th>Book Title</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            
-            <th>Available Quantity</th>
-<th>Details</th>
-        </tr>
+    <p>Browse and search books available in the library.</p>
+
+    <form method="get" class="search-box">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search by book title or author..."
+        >
+
+        <button type="submit" class="btn btn-primary">
+            Search
+        </button>
+
+    </form>
+
+    <div class="book-grid">
 
         {% for book in books %}
-        <tr>
-            <td>{{ book.title }}</td>
-            <td>{{ book.author }}</td>
-            <td>{{ book.isbn }}</td>
-            <td>{{ book.available_quantity }}</td>
-            <td>
-    <a href="/books/{{ book.id }}/">View Details</a>
-</td>
-        </tr>
+
+        <div class="book-card">
+
+            <h3>📖 {{ book.title }}</h3>
+
+            <p>
+                <strong>Author:</strong>
+                {{ book.author }}
+            </p>
+
+            <p>
+                <strong>ISBN:</strong>
+                {{ book.isbn }}
+            </p>
+
+            <p>
+                <strong>Available:</strong>
+                {{ book.available_quantity }}
+            </p>
+
+            {% if book.available_quantity > 0 %}
+
+                <p style="color: green;">
+                    ● Available
+                </p>
+
+            {% else %}
+
+                <p style="color: red;">
+                    ● Not Available
+                </p>
+
+            {% endif %}
+
+            <br>
+
+            <a
+                href="{% url 'book_details' book.id %}"
+                class="btn btn-primary"
+            >
+                View Details
+            </a>
+
+        </div>
+
         {% empty %}
-        <tr>
-            <td colspan="4">No books available.</td>
-        </tr>
+
+        <div class="card">
+
+            <h3>No Books Found</h3>
+
+            <p>
+                There are currently no books matching your search.
+            </p>
+
+        </div>
+
         {% endfor %}
 
-    </table>
+    </div>
 
-</body>
-</html>
+</div>
+
+{% endblock %}

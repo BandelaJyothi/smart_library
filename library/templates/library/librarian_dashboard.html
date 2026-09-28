@@ -1,0 +1,259 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Librarian Dashboard - Smart Library{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>👨‍💼 Librarian Dashboard</h1>
+
+        <p>
+            Welcome,
+            <strong>{{ user.first_name|default:user.username }}</strong>
+        </p>
+
+    </div>
+
+    <br>
+
+    <!-- Library Statistics -->
+
+    <div class="stat-grid">
+
+        <div class="stat-card">
+            <h2>{{ total_books }}</h2>
+            <p>Total Books</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ total_members }}</h2>
+            <p>Total Members</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ issued_books }}</h2>
+            <p>Issued Books</p>
+        </div>
+
+        <div class="stat-card">
+            <h2>{{ available_books }}</h2>
+            <p>Available Books</p>
+        </div>
+
+    </div>
+
+    <!-- Books -->
+
+    <div class="card">
+
+        <h2>📚 Books</h2>
+
+        {% if books %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Total</th>
+                            <th>Available</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for book in books %}
+
+                        <tr>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.isbn }}</td>
+                            <td>{{ book.quantity }}</td>
+                            <td>{{ book.available_quantity }}</td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <p>No books available.</p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <!-- Members -->
+
+    <div class="card">
+
+        <h2>👥 Members</h2>
+
+        {% if members %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for member in members %}
+
+                        <tr>
+                            <td>{{ member.name }}</td>
+                            <td>{{ member.email }}</td>
+                            <td>{{ member.phone }}</td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <p>No members registered.</p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <!-- Issued Books -->
+
+    <div class="card">
+
+        <h2>📖 Book Issues</h2>
+
+        {% if issues %}
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Book</th>
+                            <th>Member</th>
+                            <th>Issue Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for issue in issues %}
+
+                        <tr>
+
+                            <td>{{ issue.book.title }}</td>
+
+                            <td>{{ issue.member.name }}</td>
+
+                            <td>{{ issue.issue_date }}</td>
+
+                            <td>
+
+                                {% if issue.returned %}
+
+                                    <span style="color: green; font-weight: bold;">
+                                        ✓ Returned
+                                    </span>
+
+                                {% else %}
+
+                                    <span style="color: orange; font-weight: bold;">
+                                        ● Borrowed
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                            <td>
+
+                                {% if not issue.returned %}
+
+                                    <a
+                                        href="{% url 'return_book' issue.id %}"
+                                        class="btn btn-primary"
+                                    >
+                                        Return Book
+                                    </a>
+
+                                {% else %}
+
+                                    -
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <p>No book issues found.</p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+   <div class="card">
+
+    <a
+        href="{% url 'add_book' %}"
+        class="btn btn-primary"
+    >
+        ➕ Add New Book
+    </a>
+
+    <a
+        href="{% url 'book_catalog' %}"
+        class="btn btn-primary"
+    >
+        📚 View Book Catalog
+    </a>
+
+</div>
+
+</div>
+
+{% endblock %}

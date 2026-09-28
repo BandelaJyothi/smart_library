@@ -1,34 +1,90 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Book Reservation - Union Library</title>
-</head>
-<body>
+```html
+{% extends 'library/base.html' %}
 
-    <h1>UNION LIBRARY</h1>
+{% block title %}Book Reservation - Smart Library{% endblock %}
 
-    <h2>Book Reservation</h2>
+{% block content %}
 
-    <p><strong>Book:</strong> {{ book.title }}</p>
+<div class="container">
 
-    <p><strong>Author:</strong> {{ book.author }}</p>
+    <div class="card">
 
-    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+        <h1>📚 Book Reservation</h1>
 
-    <p><strong>Available Quantity:</strong> {{ book.available_quantity }}</p>
+        <br>
 
-    {% if book.available_quantity > 0 %}
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit">Confirm Reservation</button>
-        </form>
-    {% else %}
-        <p>Book is currently unavailable.</p>
-    {% endif %}
+        <h2>{{ book.title }}</h2>
 
-    <br>
+        <p>
+            <strong>Author:</strong>
+            {{ book.author }}
+        </p>
 
-    <a href="/books/{{ book.id }}/availability/">Back to Availability</a>
+        <p>
+            <strong>ISBN:</strong>
+            {{ book.isbn }}
+        </p>
 
-</body>
-</html>
+        <p>
+            <strong>Available Quantity:</strong>
+            {{ book.available_quantity }}
+        </p>
+
+        <br>
+
+        {% if message %}
+            <p style="color: green; font-weight: bold;">
+                {{ message }}
+            </p>
+
+            <br>
+
+            <a
+                href="{% url 'student_dashboard' %}"
+                class="btn btn-primary"
+            >
+                Go to Dashboard
+            </a>
+
+        {% elif book.available_quantity > 0 %}
+
+            <p style="color: green; font-weight: bold;">
+                ✓ This book is available for reservation.
+            </p>
+
+            <br>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Confirm Reservation
+                </button>
+            </form>
+
+        {% else %}
+
+            <p style="color: red; font-weight: bold;">
+                ✕ Book is currently unavailable.
+            </p>
+
+        {% endif %}
+
+        <br><br>
+
+        <a
+            href="{% url 'book_availability' book.id %}"
+            class="btn"
+        >
+            ← Back to Availability
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```

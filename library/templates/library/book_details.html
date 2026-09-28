@@ -1,27 +1,75 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Book Details - Union Library</title>
-</head>
-<body>
+{% extends 'library/base.html' %}
 
-    <h1>UNION LIBRARY</h1>
+{% block title %}Book Details - Smart Library{% endblock %}
 
-    <h2>Book Details</h2>
+{% block content %}
 
-    <p><strong>Title:</strong> {{ book.title }}</p>
+<div class="container">
 
-    <p><strong>Author:</strong> {{ book.author }}</p>
+    <div class="card">
 
-    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+        <h1>📖 Book Details</h1>
 
-    <p><strong>Total Quantity:</strong> {{ book.quantity }}</p>
+        <br>
 
-    <p><strong>Available Quantity:</strong> {{ book.available_quantity }}</p>
+        <h2>{{ book.title }}</h2>
 
-    <br>
+        <p>
+            <strong>Author:</strong>
+            {{ book.author }}
+        </p>
 
-    <a href="/books/">Back to Book Catalog</a>
+        <p>
+            <strong>ISBN:</strong>
+            {{ book.isbn }}
+        </p>
 
-</body>
-</html>
+        <p>
+            <strong>Total Quantity:</strong>
+            {{ book.quantity }}
+        </p>
+
+        <p>
+            <strong>Available Quantity:</strong>
+            {{ book.available_quantity }}
+        </p>
+
+        <br>
+
+        {% if book.available_quantity > 0 %}
+
+            <p style="color: green; font-weight: bold;">
+                ● Book Available
+            </p>
+
+            <br>
+
+            <a
+                href="{% url 'book_availability' book.id %}"
+                class="btn btn-primary"
+            >
+                Check Availability
+            </a>
+
+        {% else %}
+
+            <p style="color: red; font-weight: bold;">
+                ● Currently Unavailable
+            </p>
+
+        {% endif %}
+
+        <br><br>
+
+        <a
+            href="{% url 'book_catalog' %}"
+            class="btn"
+        >
+            ← Back to Book Catalog
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

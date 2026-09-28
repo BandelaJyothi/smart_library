@@ -1,34 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Login - Union Library</title>
-</head>
-<body>
+{% extends 'library/base.html' %}
 
-    <h1>UNION LIBRARY</h1>
+{% block title %}Student Login - Smart Library{% endblock %}
 
-    <h2>Student Sign In</h2>
-    {% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+{% block content %}
 
-    <form method="post">
-    {% csrf_token %}
+<div class="container">
 
-    <label>Username:</label>
-        <input type="text" name="username">
-        <br><br>
+    <div class="form-card">
 
-        <label>Password:</label>
-        <input type="password" name="password">
-        <br><br>
+        <h2>🎓 Student Login</h2>
 
-        <button type="submit">Login</button>
-    </form>
+        {% if message %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endif %}
 
-    <br>
+        <form method="post">
 
-    <a href="#">Register as Student</a>
+            {% csrf_token %}
 
-</body>
-</html>
+            <div class="form-group">
+                <label>Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Login
+            </button>
+
+        </form>
+
+        <br>
+
+        <p>
+            Don't have an account?
+            <a href="{% url 'student_register' %}">
+                Register as Student
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

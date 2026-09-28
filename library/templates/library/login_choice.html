@@ -1,21 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Union Library - Login</title>
-</head>
-<body>
+{% extends 'library/base.html' %}
 
-    <h1>UNION LIBRARY</h1>
+{% block title %}Login - Smart Library{% endblock %}
 
-    <h2>Login</h2>
+{% block content %}
 
-    <p>Select your account type</p>
+<div class="container">
 
-    <a href="/student/login/">Student Login</a>
+    <div class="card" style="max-width: 600px; margin: 60px auto; text-align: center;">
 
-    <br><br>
+        <h1>🔐 Login</h1>
 
-    <a href="/librarian/login/">Librarian Login</a>
+        <p style="margin: 15px 0 30px;">
+            Select your account type
+        </p>
 
-</body>
-</html>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+
+            <a
+                href="{% url 'student_login' %}"
+                class="btn btn-primary"
+            >
+                🎓 Student Login
+            </a>
+
+            <a
+                href="{% url 'librarian_login' %}"
+                class="btn btn-primary"
+            >
+                👨‍💼 Librarian Login
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
