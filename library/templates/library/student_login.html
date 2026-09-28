@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Login - Union Library</title>
+</head>
+<body>
+
+    <h1>UNION LIBRARY</h1>
+
+    <h2>Student Sign In</h2>
+    {% if message %}
+    <p>{{ message }}</p>
+{% endif %}
+
+    <form method="post">
+    {% csrf_token %}
+
+    <label>Username:</label>
+        <input type="text" name="username">
+        <br><br>
+
+        <label>Password:</label>
+        <input type="password" name="password">
+        <br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <br>
+
+    <a href="#">Register as Student</a>
+
+</body>
+</html>

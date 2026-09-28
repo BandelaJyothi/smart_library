@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Availability - Union Library</title>
+</head>
+<body>
+
+    <h1>UNION LIBRARY</h1>
+
+    <h2>Book Availability</h2>
+
+    <p><strong>Book:</strong> {{ book.title }}</p>
+
+    <p><strong>Author:</strong> {{ book.author }}</p>
+
+    <p><strong>Total Quantity:</strong> {{ book.quantity }}</p>
+
+    <p><strong>Available Quantity:</strong> {{ book.available_quantity }}</p>
+
+    {% if book.available_quantity > 0 %}
+        <p>Book is available.</p>
+        <a href="/books/{{ book.id }}/reserve/">Reserve Book</a>
+    {% else %}
+        <p>Book is currently unavailable.</p>
+    {% endif %}
+
+    <br><br>
+
+    <a href="/books/">Back to Book Catalog</a>
+
+</body>
+</html>

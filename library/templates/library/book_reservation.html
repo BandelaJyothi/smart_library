@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Reservation - Union Library</title>
+</head>
+<body>
+
+    <h1>UNION LIBRARY</h1>
+
+    <h2>Book Reservation</h2>
+
+    <p><strong>Book:</strong> {{ book.title }}</p>
+
+    <p><strong>Author:</strong> {{ book.author }}</p>
+
+    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+
+    <p><strong>Available Quantity:</strong> {{ book.available_quantity }}</p>
+
+    {% if book.available_quantity > 0 %}
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm Reservation</button>
+        </form>
+    {% else %}
+        <p>Book is currently unavailable.</p>
+    {% endif %}
+
+    <br>
+
+    <a href="/books/{{ book.id }}/availability/">Back to Availability</a>
+
+</body>
+</html>

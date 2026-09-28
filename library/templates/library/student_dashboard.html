@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard - Union Library</title>
+</head>
+<body>
+
+    <h1>UNION LIBRARY</h1>
+
+    <h2>Student Dashboard</h2>
+
+    <h3>Borrowed Books</h3>
+
+    <p>No borrowed books currently.</p>
+
+    <h3>Reserved Books</h3>
+
+    {% if reservations %}
+
+        {% for reservation in reservations %}
+
+            <p>
+                <strong>Book:</strong> {{ reservation.book.title }}
+            </p>
+
+            <p>
+                <strong>Author:</strong> {{ reservation.book.author }}
+            </p>
+
+            <p>
+                <strong>Status:</strong> {{ reservation.status }}
+            </p>
+
+            <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No reserved books currently.</p>
+
+    {% endif %}
+
+    <br>
+
+    <a href="/books/">Browse Books</a>
+
+</body>
+</html>

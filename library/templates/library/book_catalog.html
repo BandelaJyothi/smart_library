@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book Catalog - Union Library</title>
+</head>
+<body>
+
+    <h1>UNION LIBRARY</h1>
+
+    <h2>Book Catalog</h2>
+
+    <p>Browse available books</p>
+    <form method="get">
+    <input type="text" name="search" placeholder="Search by title or author">
+    <button type="submit">Search</button>
+</form>
+
+<br>
+
+    <table border="1">
+        <tr>
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            
+            <th>Available Quantity</th>
+<th>Details</th>
+        </tr>
+
+        {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.isbn }}</td>
+            <td>{{ book.available_quantity }}</td>
+            <td>
+    <a href="/books/{{ book.id }}/">View Details</a>
+</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No books available.</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</body>
+</html>
