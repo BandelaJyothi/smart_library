@@ -1,0 +1,93 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Update Book - Smart Library{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h2>✏️ Update Book</h2>
+
+        {% if message %}
+            <div class="message">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Book Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    value="{{ book.title }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Author</label>
+                <input
+                    type="text"
+                    name="author"
+                    value="{{ book.author }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>ISBN</label>
+                <input
+                    type="text"
+                    name="isbn"
+                    value="{{ book.isbn }}"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Total Quantity</label>
+                <input
+                    type="number"
+                    name="quantity"
+                    value="{{ book.quantity }}"
+                    min="1"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Available Quantity</label>
+                <input
+                    type="number"
+                    name="available_quantity"
+                    value="{{ book.available_quantity }}"
+                    min="0"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Update Book
+            </button>
+
+        </form>
+
+        <br>
+
+        <p>
+            <a href="{% url 'librarian_dashboard' %}">
+                ← Back to Librarian Dashboard
+            </a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

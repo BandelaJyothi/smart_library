@@ -1,0 +1,72 @@
+=```html
+{% extends 'library/base.html' %}
+
+{% block title %}Book Availability - Smart Library{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>📚 Book Availability</h1>
+
+        <br>
+
+        <h2>{{ book.title }}</h2>
+
+        <p>
+            <strong>Author:</strong>
+            {{ book.author }}
+        </p>
+
+        <p>
+            <strong>Total Quantity:</strong>
+            {{ book.quantity }}
+        </p>
+
+        <p>
+            <strong>Available Quantity:</strong>
+            {{ book.available_quantity }}
+        </p>
+
+        <br>
+
+        {% if book.available_quantity > 0 %}
+
+            <p style="color: green; font-weight: bold;">
+                ✓ Book is available
+            </p>
+
+            <br>
+
+            <a
+                href="{% url 'reserve_book' book.id %}"
+                class="btn btn-primary"
+            >
+                Reserve Book
+            </a>
+
+        {% else %}
+
+            <p style="color: red; font-weight: bold;">
+                ✕ Book is currently unavailable
+            </p>
+
+        {% endif %}
+
+        <br><br>
+
+        <a
+            href="{% url 'book_catalog' %}"
+            class="btn"
+        >
+            ← Back to Book Catalog
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```

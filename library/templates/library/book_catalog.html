@@ -1,0 +1,94 @@
+{% extends 'library/base.html' %}
+
+{% block title %}Book Catalog - Smart Library{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>📚 Book Catalog</h1>
+
+    <p>Browse and search books available in the library.</p>
+
+    <form method="get" class="search-box">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search by book title or author..."
+        >
+
+        <button type="submit" class="btn btn-primary">
+            Search
+        </button>
+
+    </form>
+
+    <div class="book-grid">
+
+        {% for book in books %}
+
+        <div class="book-card">
+
+            <h3>📖 {{ book.title }}</h3>
+
+            <p>
+                <strong>Author:</strong>
+                {{ book.author }}
+            </p>
+
+            <p>
+                <strong>ISBN:</strong>
+                {{ book.isbn }}
+            </p>
+
+            <p>
+                <strong>Available:</strong>
+                {{ book.available_quantity }}
+            </p>
+
+            {% if book.available_quantity > 0 %}
+
+                <p style="color: green;">
+                    ● Available
+                </p>
+
+            {% else %}
+
+                <p style="color: red;">
+                    ● Not Available
+                </p>
+
+            {% endif %}
+
+            <br>
+
+            <a
+                href="{% url 'book_details' book.id %}"
+                class="btn btn-primary"
+            >
+                View Details
+            </a>
+
+        </div>
+
+        {% empty %}
+
+        <div class="card">
+
+            <h3>No Books Found</h3>
+
+            <p>
+                There are currently no books matching your search.
+            </p>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

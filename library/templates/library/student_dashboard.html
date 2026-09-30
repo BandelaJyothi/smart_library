@@ -1,0 +1,131 @@
+```html
+{% extends 'library/base.html' %}
+
+{% block title %}Student Dashboard - Smart Library{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>🎓 Student Dashboard</h1>
+
+        <p>
+            Welcome,
+            <strong>{{ user.first_name|default:user.username }}</strong>
+        </p>
+
+    </div>
+
+    <br>
+
+    <!-- Borrowed Books -->
+
+    <div class="card">
+
+        <h2>📚 Borrowed Books</h2>
+
+        {% if issues %}
+
+            {% for issue in issues %}
+
+                <div class="book-card">
+
+                    <h3>📖 {{ issue.book.title }}</h3>
+
+                    <p>
+                        <strong>Author:</strong>
+                        {{ issue.book.author }}
+                    </p>
+
+                    <p>
+                        <strong>Issue Date:</strong>
+                        {{ issue.issue_date }}
+                    </p>
+
+                    {% if issue.returned %}
+
+                        <p style="color: green; font-weight: bold;">
+                            ✓ Returned
+                        </p>
+
+                    {% else %}
+
+                        <p style="color: orange; font-weight: bold;">
+                            ● Currently Borrowed
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                No borrowed books currently.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <!-- Reserved Books -->
+
+    <div class="card">
+
+        <h2>🔖 Reserved Books</h2>
+
+        {% if reservations %}
+
+            {% for reservation in reservations %}
+
+                <div class="book-card">
+
+                    <h3>📖 {{ reservation.book.title }}</h3>
+
+                    <p>
+                        <strong>Author:</strong>
+                        {{ reservation.book.author }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ reservation.status }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>
+                No reserved books currently.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <br>
+
+    <div class="card">
+
+        <a
+            href="{% url 'book_catalog' %}"
+            class="btn btn-primary"
+        >
+            📚 Browse Books
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```

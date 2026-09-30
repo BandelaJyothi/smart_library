@@ -1,0 +1,90 @@
+```html
+{% extends 'library/base.html' %}
+
+{% block title %}Book Reservation - Smart Library{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>📚 Book Reservation</h1>
+
+        <br>
+
+        <h2>{{ book.title }}</h2>
+
+        <p>
+            <strong>Author:</strong>
+            {{ book.author }}
+        </p>
+
+        <p>
+            <strong>ISBN:</strong>
+            {{ book.isbn }}
+        </p>
+
+        <p>
+            <strong>Available Quantity:</strong>
+            {{ book.available_quantity }}
+        </p>
+
+        <br>
+
+        {% if message %}
+            <p style="color: green; font-weight: bold;">
+                {{ message }}
+            </p>
+
+            <br>
+
+            <a
+                href="{% url 'student_dashboard' %}"
+                class="btn btn-primary"
+            >
+                Go to Dashboard
+            </a>
+
+        {% elif book.available_quantity > 0 %}
+
+            <p style="color: green; font-weight: bold;">
+                ✓ This book is available for reservation.
+            </p>
+
+            <br>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+                    Confirm Reservation
+                </button>
+            </form>
+
+        {% else %}
+
+            <p style="color: red; font-weight: bold;">
+                ✕ Book is currently unavailable.
+            </p>
+
+        {% endif %}
+
+        <br><br>
+
+        <a
+            href="{% url 'book_availability' book.id %}"
+            class="btn"
+        >
+            ← Back to Availability
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+```

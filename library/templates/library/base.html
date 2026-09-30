@@ -1,0 +1,97 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Smart Library{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        📚 Smart Library
+    </div>
+
+    <ul class="nav-links">
+
+        <li>
+            <a href="{% url 'landing' %}">Home</a>
+        </li>
+
+        <li>
+            <a href="{% url 'book_catalog' %}">Books</a>
+        </li>
+
+        {% if user.is_authenticated %}
+
+            <li>
+                <a href="{% url 'student_dashboard' %}">
+                    Dashboard
+                </a>
+            </li>
+
+            {% if user.is_staff %}
+                <li>
+                    <a href="{% url 'librarian_dashboard' %}">
+                        Librarian
+                    </a>
+                </li>
+            {% endif %}
+
+            <li>
+                <a href="{% url 'logout_user' %}">
+                    Logout
+                </a>
+            </li>
+
+        {% else %}
+
+            <li>
+                <a href="{% url 'login_choice' %}">
+                    Login
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'student_register' %}">
+                    Register
+                </a>
+            </li>
+
+        {% endif %}
+
+    </ul>
+
+</nav>
+
+
+<main>
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 Smart Library Management System
+    </p>
+
+    <p>
+        Developed using Python & Django
+    </p>
+
+</footer>
+
+</body>
+</html>
